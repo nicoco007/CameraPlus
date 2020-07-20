@@ -139,6 +139,7 @@ namespace CameraPlus
             //DestroyImmediate(gameObj.GetComponent(typeof(CameraRenderCallbacksManager)));
             DestroyImmediate(gameObj.GetComponent("AudioListener"));
             DestroyImmediate(gameObj.GetComponent("MeshCollider"));
+            DestroyImmediate(gameObj.GetComponent("MainCamera"));
 
             _cam = gameObj.GetComponent<Camera>();
             _cam.stereoTargetEye = StereoTargetEyeMask.None;
