@@ -145,6 +145,7 @@ namespace CameraPlus
             _cam.stereoTargetEye = StereoTargetEyeMask.None;
             _cam.enabled = true;
             _cam.name = Path.GetFileName(Config.FilePath);
+            _cam.nearClipPlane = 0.1f;
 
             var _liv = _cam.GetComponent<LIV.SDK.Unity.LIV>();
             if (_liv)
