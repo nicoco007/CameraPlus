@@ -28,9 +28,13 @@ namespace CameraPlus
         protected readonly WaitUntil _waitForMainCamera = new WaitUntil(() => Camera.main);
         private readonly WaitForSecondsRealtime _waitForSecondsRealtime = new WaitForSecondsRealtime(1f);
         protected const int OnlyInThirdPerson = 3;
+        protected const int UILayer = 5;
         protected const int OnlyInFirstPerson = 6; //Moved to an empty layer because layer 4 overlapped the floor
         protected const int NotesDebriLayer = 9;
         protected const int AlwaysVisible = 10; // For BeatSaberCunstomAvatars above v5.0.0
+        protected const int CustomAvatarThirdPerson = 21;
+        protected const int CustomAvatarFirstPerson = 22;
+        protected const int CustomAvatarAlwaysVisible = 23;
         public bool ThirdPerson {
             get { return _thirdPerson; }
             set {
@@ -42,11 +46,15 @@ namespace CameraPlus
                 {
                     _cam.cullingMask &= ~(1 << OnlyInFirstPerson);
                     _cam.cullingMask |= 1 << OnlyInThirdPerson;
+                    _cam.cullingMask &= ~(1 << CustomAvatarFirstPerson);
+                    _cam.cullingMask |= 1 << CustomAvatarThirdPerson;
                 }
                 else
                 {
                     _cam.cullingMask &= ~(1 << OnlyInThirdPerson);
                     _cam.cullingMask |= 1 << OnlyInFirstPerson;
+                    _cam.cullingMask &= ~(1 << CustomAvatarThirdPerson);
+                    _cam.cullingMask |= 1 << CustomAvatarFirstPerson;
                 }
             }
         }
@@ -337,6 +345,12 @@ namespace CameraPlus
             if (_moverPointer) Destroy(_moverPointer);
             _moverPointer = pointer.gameObject.AddComponent<CameraMoverPointer>();
             _moverPointer.Init(this, _cameraCube);
+
+            if (to.name=="GameCore" && Config.movementScriptPath != String.Empty && Config.movementAudioSync)
+            {
+                AddMovementScript();
+                Logger.Log($"Add MoveScript \"{Path.GetFileName(Config.movementScriptPath)}\" successfully initialized! {Convert.ToString(_cam.cullingMask, 16)}");
+            }
         }
 
         [DllImport("user32.dll")]
@@ -450,7 +464,9 @@ namespace CameraPlus
 
                 if (Config.movementScriptPath == "SongMovementScript")
                     _cameraMovement = _cam.gameObject.AddComponent<SongCameraMovement>();
-                else if (File.Exists(Config.movementScriptPath))
+                else if (File.Exists(Config.movementScriptPath) || 
+                        File.Exists(Path.Combine(UnityGame.UserDataPath, Plugin.Name, "Scripts", Config.movementScriptPath)) || 
+                        File.Exists(Path.Combine(UnityGame.UserDataPath, Plugin.Name, "Scripts", Path.GetFileName(Config.movementScriptPath))))
                     _cameraMovement = _cam.gameObject.AddComponent<CameraMovement>();
                 else
                     return;
@@ -513,19 +529,27 @@ namespace CameraPlus
                 {
                     _cam.cullingMask |= 1 << OnlyInThirdPerson;
                     _cam.cullingMask &= ~(1 << OnlyInFirstPerson);
+                    _cam.cullingMask |= 1 << CustomAvatarThirdPerson;
+                    _cam.cullingMask &= ~(1 << CustomAvatarFirstPerson);
                 }
                 else
                 {
                     _cam.cullingMask |= 1 << OnlyInFirstPerson;
                     _cam.cullingMask &= ~(1 << OnlyInThirdPerson);
+                    _cam.cullingMask |= 1 << CustomAvatarFirstPerson;
+                    _cam.cullingMask &= ~(1 << CustomAvatarThirdPerson);
                 }
                 _cam.cullingMask |= 1 << AlwaysVisible;
+                _cam.cullingMask |= 1 << CustomAvatarAlwaysVisible;
             }
             else
             {
                 _cam.cullingMask &= ~(1 << OnlyInThirdPerson);
                 _cam.cullingMask &= ~(1 << OnlyInFirstPerson);
                 _cam.cullingMask &= ~(1 << AlwaysVisible);
+                _cam.cullingMask &= ~(1 << CustomAvatarThirdPerson);
+                _cam.cullingMask &= ~(1 << CustomAvatarFirstPerson);
+                _cam.cullingMask &= ~(1 << CustomAvatarAlwaysVisible);
             }
             if (Config.debri!="link")
             {
@@ -534,6 +558,10 @@ namespace CameraPlus
                 else
                     _cam.cullingMask &= ~(1 << NotesDebriLayer);
             }
+            if (Config.displayUI)
+                _cam.cullingMask &= ~(1 << UILayer);
+            else
+                _cam.cullingMask |= (1 << UILayer);
         }
 
         public bool IsWithinRenderArea(Vector2 mousePos, Config c)

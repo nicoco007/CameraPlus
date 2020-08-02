@@ -28,8 +28,12 @@ namespace CameraPlus
         public static string Name => "CameraPlus";
         public static string MainCamera => "cameraplus";
 
-        private RootConfig _rootConfig;
+        public RootConfig _rootConfig;
         private ProfileChanger _profileChanger;
+
+        // Delete when CustomAvatar returns
+        private int CustomAvatarThirdPerson = 21; //CustomAvatarS have the first person and third person processes reversed.
+        private int CustomAvatarAlwaysVisible = 23;
 
         [Init]
         public void Init(IPALogger logger)
@@ -94,6 +98,11 @@ namespace CameraPlus
 
                 yield return new WaitForSeconds(1.0f);
 
+                // Delete when CustomAvatars returns layer
+                Camera.main.cullingMask |= (1 << CustomAvatarThirdPerson);
+                Camera.main.cullingMask |= (1 << CustomAvatarAlwaysVisible);
+
+
                 // Invoke each activeSceneChanged event
                 foreach (var func in ActiveSceneChanged?.GetInvocationList())
                 {
@@ -108,7 +117,7 @@ namespace CameraPlus
                     }
                 }
             }
-            if (to.name == "GameCore")
+            if (to.name == "GameCore" || to.name == "MenuCore")
                 CameraUtilities.SetAllCameraCulling();
         }
 
