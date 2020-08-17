@@ -96,9 +96,14 @@ Edit that file to configure CameraPlus:
 
 ## Movement Script
 The sample script described in MovementScriptPath is located in the "Beat Saber\UserData\CameraPlus\Scripts" folder.
-movementScriptPath should contain either a "fullpath including the file name + extension" or "file name + extension json"
-ex) movementScriptpath = "C:\Program Files(x86)\Steam\steamapps\common\Beat Saber\UserData\CameraPlus\Scripts\ExampleMovementScript.json"
-    movementScriptpath = "ExampleMovementScript.json"
+
+movementScriptPath should contain either a "fullpath including the file name + extension" or "file name + extension json".
+
+ex)
+{
+movementScriptpath = "C:\Program Files(x86)\Steam\steamapps\common\Beat Saber\UserData\CameraPlus\Scripts\ExampleMovementScript.json"
+movementScriptpath = "ExampleMovementScript.json"
+}
     
 ### If ActiveInPauseMenu is set to false, there is a bug that the script doesn't return to its original state when SteamVR screen is displayed. 
 ```xml
