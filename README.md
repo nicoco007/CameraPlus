@@ -99,13 +99,13 @@ The sample script described in MovementScriptPath is located in the "Beat Saber\
 
 movementScriptPath should contain either a "fullpath including the file name + extension" or "file name + extension json".
 
-####ex)
+###ex)
 ```xml
 {
 movementScriptpath = "C:\Program Files(x86)\Steam\steamapps\common\Beat Saber\UserData\CameraPlus\Scripts\ExampleMovementScript.json"
 movementScriptpath = "ExampleMovementScript.json"
 }
-    
+```
 ```xml
 {
     "ActiveInPauseMenu": true,     "ActiveInPauseMenu": Determines whether the camera pauses when pausing the game.
