@@ -36,6 +36,8 @@ Edit that file to configure Profile change:
 | **ProfileSceneChange**      | When set to True, profile switching is enabled in the Menu scene and Game scene.             |
 | **MenuProfile**             | Enter the profile name to be read in the Menu scene.                                         |
 | **GameProfile**             | Enter the profile name to be read in the Game scene.                                         |
+| **CurrentProfile**          | It is currently not working. This is for the next version.                                   |
+| **CameraQuadLayer**         | Changes the display layer of the third person camera. Basically, do not move it from zero.   |
 ### Profile Name
 ![ProfileName](https://github.com/Snow1226/CameraPlus/blob/master/ScreenShot_ProfileChange.png)
 
@@ -88,13 +90,16 @@ Edit that file to configure CameraPlus:
 | **forceFirstPersonUpRight** | Lock rotation of first person camera on Z axis to keep the camera upright                    |
 | **Avatar**                  | Switch avatar display layer                                                                  |
 | **debri**                   | Switches between In-Game setting linkage, forced display, and forced off for Notes Debris.   |
-| **movementScriptPath**      | Full path (including file name) to the movement script file to associate with the camera     |
-
-ex) movementScriptpath = "C:\Program Files(x86)\Steam\steamapps\common\Beat Saber\UserData\CameraPlus\Scripts\ExampleMovementScript.json"
+| **displayUI**               | The cam+ screen toggles the UI display, hiding EnhancedStreamChat is currently not supported.|
+| **movementScriptPath**      | Enter the script file name, including the json extension.                                    |
+| **movementAudioSync**       | Syncs the transitional process of the move script to the game audio.                         |
 
 ## Movement Script
-The sample script described in MovementScriptPath is located in the Beat Saber \ UserData \ CameraPlus \ Scripts folder.
-
+The sample script described in MovementScriptPath is located in the "Beat Saber\UserData\CameraPlus\Scripts" folder.
+movementScriptPath should contain either a "fullpath including the file name + extension" or "file name + extension json"
+ex) movementScriptpath = "C:\Program Files(x86)\Steam\steamapps\common\Beat Saber\UserData\CameraPlus\Scripts\ExampleMovementScript.json"
+    movementScriptpath = "ExampleMovementScript.json"
+    
 ### If ActiveInPauseMenu is set to false, there is a bug that the script doesn't return to its original state when SteamVR screen is displayed. 
 ```xml
 {

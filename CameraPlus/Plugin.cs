@@ -117,7 +117,7 @@ namespace CameraPlus
                     }
                 }
             }
-            if (to.name == "GameCore" || to.name == "MenuCore")
+            if (to.name == "GameCore" || to.name == "MenuCore" || to.name== "MenuViewControllers" || to.name== "HealthWarning")
                 CameraUtilities.SetAllCameraCulling();
         }
 

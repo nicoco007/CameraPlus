@@ -180,6 +180,7 @@ namespace CameraPlus
             _cameraCube = _cameraCubeGO.transform;
             _cameraCube.localScale = new Vector3(0.15f, 0.15f, 0.22f);
             _cameraCube.name = "CameraCube";
+            _cameraCubeGO.layer = Plugin.Instance._rootConfig.CameraQuadLayer;
 
             _quad = GameObject.CreatePrimitive(PrimitiveType.Quad);
             DontDestroyOnLoad(_quad);
@@ -190,6 +191,7 @@ namespace CameraPlus
             _quad.transform.localEulerAngles = new Vector3(0, 180, 0);
             _quad.transform.localScale = new Vector3(_cam.aspect, 1, 1);
             _cameraPreviewQuad = _quad;
+            _quad.layer = Plugin.Instance._rootConfig.CameraQuadLayer;
 
             ReadConfig();
 
