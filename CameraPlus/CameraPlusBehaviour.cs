@@ -216,7 +216,7 @@ namespace CameraPlus
             //      FirstPersonOffset = Config.FirstPersonPositionOffset;
             //       FirstPersonRotationOffset = Config.FirstPersonRotationOffset;
             SceneManager_activeSceneChanged(new Scene(), new Scene());
-            Logger.Log($"Camera \"{Path.GetFileName(Config.FilePath)}\" successfully initialized! {Convert.ToString(_cam.cullingMask,16)}");
+            Logger.Log($"Camera \"{Path.GetFileName(Config.FilePath)}\" successfully initialized!");
         }
 
         protected virtual void OnDestroy()
