@@ -163,14 +163,14 @@ namespace CameraPlus
                         parentBehaviour.CloseContextMenu();
                         parentBehaviour.Config.Save();
                     }
-                    if (GUI.Button(new Rect(menuPos.x + 130, menuPos.y + 185, 170, 30), new GUIContent(parentBehaviour.Config.debri=="link" ? "Forced display Debri" : parentBehaviour.Config.debri == "show" ? "Forced non-display Debri" : "Debri Linked In-Game")))
+                    if (GUI.Button(new Rect(menuPos.x + 130, menuPos.y + 185, 170, 30), new GUIContent(parentBehaviour.Config.debris == "link" ? "Force Show Debris" : parentBehaviour.Config.debris == "show" ? "Force Hide Debris" : "Use Game Debris Settings")))
                     {
-                        if (parentBehaviour.Config.debri == "link")
-                            parentBehaviour.Config.debri = "show";
-                        else if (parentBehaviour.Config.debri=="show")
-                            parentBehaviour.Config.debri = "hide";
+                        if (parentBehaviour.Config.debris == "link")
+                            parentBehaviour.Config.debris = "show";
+                        else if (parentBehaviour.Config.debris == "show")
+                            parentBehaviour.Config.debris = "hide";
                         else
-                            parentBehaviour.Config.debri = "link";
+                            parentBehaviour.Config.debris = "link";
                         parentBehaviour.SetCullingMask();
                         parentBehaviour.CloseContextMenu();
                         parentBehaviour.Config.Save();

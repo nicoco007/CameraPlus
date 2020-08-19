@@ -30,7 +30,7 @@ namespace CameraPlus
         protected const int OnlyInThirdPerson = 3;
         protected const int UILayer = 5;
         protected const int OnlyInFirstPerson = 6; //Moved to an empty layer because layer 4 overlapped the floor
-        protected const int NotesDebriLayer = 9;
+        protected const int NotesDebrisLayer = 9;
         protected const int AlwaysVisible = 10; // For BeatSaberCunstomAvatars above v5.0.0
 
         public bool ThirdPerson {
@@ -542,12 +542,12 @@ namespace CameraPlus
                 _cam.cullingMask &= ~(1 << OnlyInFirstPerson);
                 _cam.cullingMask &= ~(1 << AlwaysVisible);
             }
-            if (Config.debri!="link")
+            if (Config.debris != "link")
             {
-                if (Config.debri=="show")
-                    _cam.cullingMask |= (1 << NotesDebriLayer);
+                if (Config.debris == "show")
+                    _cam.cullingMask |= (1 << NotesDebrisLayer);
                 else
-                    _cam.cullingMask &= ~(1 << NotesDebriLayer);
+                    _cam.cullingMask &= ~(1 << NotesDebrisLayer);
             }
             if (Config.displayUI)
                 _cam.cullingMask &= ~(1 << UILayer);
