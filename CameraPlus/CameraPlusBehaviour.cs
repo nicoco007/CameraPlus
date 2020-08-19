@@ -149,6 +149,7 @@ namespace CameraPlus
             _cam.stereoTargetEye = StereoTargetEyeMask.None;
             _cam.enabled = true;
             _cam.name = Path.GetFileName(Config.FilePath);
+            _cam.nearClipPlane = 0.1f;
 
             var _liv = _cam.GetComponent<LIV.SDK.Unity.LIV>();
             if (_liv)
@@ -164,7 +165,6 @@ namespace CameraPlus
             var camera = _mainCamera.transform;
             transform.position = camera.position;
             transform.rotation = camera.rotation;
-            Logger.Log($"near clipplane \"{Camera.main.nearClipPlane}");
 
             gameObj.transform.parent = transform;
             gameObj.transform.localPosition = Vector3.zero;
