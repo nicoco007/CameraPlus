@@ -30,10 +30,6 @@ namespace CameraPlus
         public RootConfig _rootConfig;
         private ProfileChanger _profileChanger;
 
-        // Delete when CustomAvatar returns
-        private int CustomAvatarThirdPerson = 21; //CustomAvatarS have the first person and third person processes reversed.
-        private int CustomAvatarAlwaysVisible = 23;
-
         [Init]
         public void Init(IPALogger logger)
         {
