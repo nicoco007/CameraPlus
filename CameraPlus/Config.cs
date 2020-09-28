@@ -7,7 +7,7 @@ namespace CameraPlus
     public class Config
     {
         public string FilePath { get; }
-        public float fov = 90;
+        public float fov = 50;
         public int antiAliasing = 2;
         public float renderScale = 1;
         public float positionSmooth = 10;
@@ -22,7 +22,7 @@ namespace CameraPlus
 
         public float posx;
         public float posy = 2;
-        public float posz = -1.2f;
+        public float posz = -3.0f;
 
         public float angx = 15;
         public float angy;

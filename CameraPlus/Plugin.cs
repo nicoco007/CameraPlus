@@ -3,15 +3,14 @@ using System.Reflection;
 using System.Collections;
 using System.Collections.Concurrent;
 using IPA;
-using IPA.Loader;
 using IPA.Utilities;
 using IPALogger = IPA.Logging.Logger;
 using LogLevel = IPA.Logging.Logger.Level;
 using HarmonyLib;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using Object = UnityEngine.Object;
 using System.IO;
+using Newtonsoft.Json;
 
 namespace CameraPlus
 {
@@ -40,6 +39,25 @@ namespace CameraPlus
         {
             Logger.log = logger;
             Logger.Log("Logger prepared", LogLevel.Debug);
+            string path = Path.Combine(UnityGame.UserDataPath, Plugin.Name + ".ini");
+            _rootConfig = new RootConfig(path);
+            if (_rootConfig.ForceDisableSmoothCamera)
+            {
+                try
+                {
+                    string gameCfgPath = Path.Combine(Application.persistentDataPath, "settings.cfg");
+                    var settings = JsonConvert.DeserializeObject<ConfigEntity>(File.ReadAllText(gameCfgPath));
+                    if (settings.smoothCameraEnabled == 1)
+                    {
+                        settings.smoothCameraEnabled = 0;
+                        File.WriteAllText(gameCfgPath, JsonConvert.SerializeObject(settings));
+                    }
+                }
+                catch (Exception e)
+                {
+                    Logger.Log($"Fail SmoothCamera off {e.Message}", LogLevel.Error);
+                }
+            }
         }
 
         [OnStart]
@@ -64,8 +82,6 @@ namespace CameraPlus
             CameraUtilities.AddNewCamera(Plugin.MainCamera);
             CameraProfiles.CreateMainDirectory();
 
-            string path = Path.Combine(UnityGame.UserDataPath, Plugin.Name + ".ini");
-            _rootConfig = new RootConfig(path);
             _profileChanger = new ProfileChanger();
 
             Logger.Log($"{Plugin.Name} has started", LogLevel.Notice);
@@ -98,11 +114,6 @@ namespace CameraPlus
 
                 yield return new WaitForSeconds(1.0f);
 
-                // Delete when CustomAvatars returns layer
-                Camera.main.cullingMask |= (1 << CustomAvatarThirdPerson);
-                Camera.main.cullingMask |= (1 << CustomAvatarAlwaysVisible);
-
-
                 // Invoke each activeSceneChanged event
                 foreach (var func in ActiveSceneChanged?.GetInvocationList())
                 {
@@ -117,8 +128,10 @@ namespace CameraPlus
                     }
                 }
             }
-            if (to.name == "GameCore" || to.name == "MenuCore" || to.name== "MenuViewControllers" || to.name== "HealthWarning")
+            if (to.name == "GameCore" || to.name == "MenuCore" || to.name == "MenuViewControllers" || to.name == "HealthWarning")
+            {
                 CameraUtilities.SetAllCameraCulling();
+            }
         }
 
         [OnExit]

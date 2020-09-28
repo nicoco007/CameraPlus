@@ -86,8 +86,10 @@ namespace CameraPlus
         {
             public Vector3 StartPos;
             public Vector3 StartRot;
+            public float StartFOV;
             public Vector3 EndPos;
             public Vector3 EndRot;
+            public float EndFOV;
             public float Duration;
             public float Delay;
             public bool EaseTransition = true;
@@ -115,11 +117,13 @@ namespace CameraPlus
                         var startRot = movement["StartRot"];
                         newMovement.StartPos = new Vector3(startPos["x"].AsFloat, startPos["y"].AsFloat, startPos["z"].AsFloat);
                         newMovement.StartRot = new Vector3(startRot["x"].AsFloat, startRot["y"].AsFloat, startRot["z"].AsFloat);
+                        newMovement.StartFOV = movement["StartFOV"].AsFloat;
 
                         var endPos = movement["EndPos"];
                         var endRot = movement["EndRot"];
                         newMovement.EndPos = new Vector3(endPos["x"].AsFloat, endPos["y"].AsFloat, endPos["z"].AsFloat);
                         newMovement.EndRot = new Vector3(endRot["x"].AsFloat, endRot["y"].AsFloat, endRot["z"].AsFloat);
+                        newMovement.EndFOV = movement["EndFOV"].AsFloat;
 
                         newMovement.Delay = movement["Delay"].AsFloat;
                         newMovement.Duration = Mathf.Clamp(movement["Duration"].AsFloat, 0.01f, float.MaxValue); // Make sure duration is at least 0.01 seconds, to avoid a divide by zero error
